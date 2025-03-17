@@ -1,24 +1,7 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-    archive = {
-      source  = "hashicorp/archive"
-      version = "~> 2.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-east-1"
-}
-
 data "archive_file" "lambda" {
   type        = "zip"
-  source_file = "bin/bootstrap"
-  output_path = "bin/lambda.zip"
+  source_file = "../golang/bin/bootstrap"
+  output_path = "../golang/bin/lambda.zip"
 }
 
 resource "aws_lambda_function" "lambda" {
@@ -34,12 +17,10 @@ resource "aws_lambda_function" "lambda" {
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
-
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
     }
-
     actions = ["sts:AssumeRole"]
   }
 }
