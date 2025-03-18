@@ -1,4 +1,4 @@
-module functions
+module basic-function
 
 go 1.22.2
 
